@@ -1,5 +1,6 @@
 package com.example.my_list_itens.ui.screen
 
+import android.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,7 +13,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.ChevronLeft
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.FileDownload
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -84,26 +89,43 @@ fun ExportCsvScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Exportar CSV")
+                    Text(
+                        text = "Exportar CSV",
+                        color = Color.White
+                    )
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF183729),
-                    titleContentColor = Color.White
-                ),
-                actions = {
 
+                navigationIcon = {
                     IconButton(
                         onClick = {
                             navController.popBackStack()
                         }
                     ) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBackIosNew,
+                            imageVector = Icons.Default.ChevronLeft,
                             contentDescription = "Voltar",
                             tint = Color.White
                         )
                     }
-                }
+                },
+
+                actions = {
+
+                    IconButton(
+                        onClick = { /* abrir menu */ }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.MoreVert,
+                            contentDescription = "Mais opções",
+                            tint = Color.White
+                        )
+                    }
+                },
+
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF183729),
+                    titleContentColor = Color.White
+                )
             )
         }
     ) { padding ->
@@ -116,7 +138,7 @@ fun ExportCsvScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
 
-            Card(
+            Card( modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = Color(0xFF2E7D32).copy(alpha = 0.1f)
@@ -127,7 +149,7 @@ fun ExportCsvScreen(
                 ) {
 
                     Text(
-                        text = "Resumo",
+                        text = "RESUMO DA EXPORTAÇÃO",
                         fontWeight = FontWeight.Bold
                     )
 
@@ -205,7 +227,7 @@ fun ExportCsvScreen(
             ) {
 
                 Icon(
-                    imageVector = Icons.Default.FileDownload,
+                    imageVector = Icons.Default.Refresh,
                     contentDescription = null
                 )
 
@@ -213,7 +235,7 @@ fun ExportCsvScreen(
                     modifier = Modifier.width(8.dp)
                 )
 
-                Text("Exportar CSV")
+                Text("Gerar CSV")
             }
 
             Card(

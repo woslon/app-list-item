@@ -1,5 +1,6 @@
 package com.example.my_list_itens.ui.screen
 
+import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -55,16 +57,32 @@ fun listScreen(
                     titleContentColor = Color.White
                 ),
                 actions = {
-                    IconButton(onClick = {
-                        navController.navigate("export_csv")
-                    }) {
-                        Icon(Icons.Default.FileDownload, null, tint = Color.White)
-                    }
 
-                    IconButton(onClick = {
-                        viewModel.deleteAll()
-                    }) {
-                        Icon(Icons.Default.Delete, null, tint = Color.White)
+                    Surface(
+                        onClick = {
+                            navController.navigate("export_csv")
+                        },
+                        shape = RoundedCornerShape(12.dp),
+                        color = Color.White.copy(alpha = 0.1f), // opacidade
+                        tonalElevation = 0.dp
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .padding(horizontal = 14.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "Exportar",
+                                color = Color.White
+                            )
+
+                            Icon(
+                                imageVector = Icons.Default.ChevronRight,
+                                contentDescription = "exportar",
+                                tint = Color.White
+                            )
+                        }
                     }
                 }
             )
@@ -239,6 +257,12 @@ fun listScreen(
                         )
                     ) {
 
+                        Text(
+                            text = "Adicionar item",
+                            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                            textAlign = TextAlign.Center
+                        )
+
                         Column(
                             modifier = Modifier.padding(16.dp)
                         ) {
@@ -251,7 +275,7 @@ fun listScreen(
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(top = 12.dp),
+                                    .padding(top = 16.dp),
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
 
