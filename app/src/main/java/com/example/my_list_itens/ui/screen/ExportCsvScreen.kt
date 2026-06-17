@@ -43,19 +43,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.my_list_itens.data.local.entity.History
 import com.example.my_list_itens.ui.viewmodel.ItemViewModel
+import com.example.my_list_itens.ui.viewmodel.HistoryViewModel
 import com.example.my_list_itens.utils.CsvUtils
 import com.example.my_list_itens.utils.Alert
 import java.io.File
 import java.text.NumberFormat
+import java.time.LocalDate
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExportCsvScreen(
     navController: NavController,
-    viewModel: ItemViewModel = hiltViewModel()
+
 ) {
+    val itemViewModel: ItemViewModel = hiltViewModel()
+    val historyViewModel: HistoryViewModel = hiltViewModel()
 
     var fileName by remember {
         mutableStateOf("lista_itens")
@@ -69,7 +74,7 @@ fun ExportCsvScreen(
         mutableStateOf<File?>(null)
     }
 
-    val items by viewModel.getAll()
+    val items by itemViewModel.getAll()
         .collectAsState(initial = emptyList())
 
     val format = NumberFormat.getCurrencyInstance(
@@ -109,7 +114,7 @@ fun ExportCsvScreen(
                 actions = {
 
                     IconButton(
-                        onClick = { /* abrir menu */ }
+                        onClick = { navController.navigate("history") }
                     ) {
                         Icon(
                             imageVector = Icons.Default.MoreVert,
@@ -203,17 +208,30 @@ fun ExportCsvScreen(
             Button(
                 onClick = {
 
-                   context.Alert( title = "Atenção !", msg = "Gerando arquivo CSV...")
+                    context.Alert(
+                        title = "Atenção !",
+                        msg = "Gerando arquivo CSV..."
+                    )
 
                     val csv = CsvUtils.generateCsv(
                         items = items,
                         includeHeader = includeHeader
                     )
 
-                    exportedFile = CsvUtils.saveCsv(
+                    val file = CsvUtils.saveCsv(
                         context = context,
                         fileName = fileName,
                         content = csv
+                    )
+
+                    exportedFile = file
+
+                    historyViewModel.add(
+                        History(
+                            fileName = "$fileName.csv",
+                            date = LocalDate.now().toString(),
+                            totalItens = items.size
+                        )
                     )
                 },
                 modifier = Modifier

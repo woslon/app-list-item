@@ -2,8 +2,10 @@ package com.example.my_list_itens.di
 
 import com.example.my_list_itens.data.local.database.AppDatabase
 import com.example.my_list_itens.data.local.dao.itemDao.ItemDao
+import com.example.my_list_itens.data.local.dao.historyDao.HistoryDao
 import android.content.Context
 import androidx.room.Room
+
 import javax.inject.Singleton
 import dagger.Module
 import dagger.Provides
@@ -33,5 +35,12 @@ object DatabaseModule {
         db: AppDatabase
     ): ItemDao {
         return db.itemDao()
+    }
+
+    @Provides
+    fun provideHistoryDao(
+        db : AppDatabase
+    ) : HistoryDao {
+        return  db.historyDao()
     }
 }
