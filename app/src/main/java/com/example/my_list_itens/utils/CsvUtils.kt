@@ -30,6 +30,9 @@ object CsvUtils {
                             "${item.date}\n"
                 )
             }
+            val totalGeral = items.sumOf { it.price * it.quantity }
+            append("\nTotal Geral,$totalGeral\n")
+            println(totalGeral)
         }
     }
 
