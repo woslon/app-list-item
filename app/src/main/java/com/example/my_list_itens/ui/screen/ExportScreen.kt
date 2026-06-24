@@ -1,5 +1,6 @@
 package com.example.my_list_itens.ui.screen
 
+import android.R
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,6 +25,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -143,7 +145,7 @@ fun ExportScreen(
             Card( modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = Color(0xFF2E7D32).copy(alpha = 0.1f)
+                    containerColor = MaterialTheme.colorScheme.background
                 )
             ) {
                 Column(
@@ -182,6 +184,9 @@ fun ExportScreen(
             )
 
             Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.background
+                ),
                 shape = RoundedCornerShape(12.dp)
             ) {
 
@@ -254,14 +259,18 @@ fun ExportScreen(
                     modifier = Modifier.width(8.dp)
                 )
 
-                Text("Gerar CSV")
+                Text(
+                    modifier = Modifier,
+                    color = Color.White,
+                    text = "Gerar CSV"
+                )
             }
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = Color(0xFFF5F5F5)
+                    containerColor = MaterialTheme.colorScheme.background
                 )
             ) {
 
